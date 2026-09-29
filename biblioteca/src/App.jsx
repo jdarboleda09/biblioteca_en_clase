@@ -5,6 +5,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './pages/Home'
 import Reservar from './pages/Reservar'
+import Admin from './pages/Admin'
 
 function App() {
 
@@ -61,6 +62,37 @@ function App() {
     )
   }
 
+  const editarReserva = (id, nuevoNombre) => {
+
+  setLibros(librosActuales =>
+    librosActuales.map(libro =>
+      libro.id === id
+        ? {
+            ...libro,
+            usuario: nuevoNombre
+          }
+        : libro
+    )
+  )
+
+}
+
+const eliminarReserva = (id) => {
+
+  setLibros(librosActuales =>
+    librosActuales.map(libro =>
+      libro.id === id
+        ? {
+            ...libro,
+            reservado: false,
+            usuario: ''
+          }
+        : libro
+    )
+  )
+
+}
+
   return (
     <div className="d-flex flex-column min-vh-100">
 
@@ -85,6 +117,17 @@ function App() {
             }
           />
 
+          <Route
+            path="/admin"
+            element={
+              <Admin
+                libros={libros}
+                editarReserva={editarReserva}
+                eliminarReserva={eliminarReserva}
+              />
+            }
+          />
+
         </Routes>
 
       </main>
@@ -94,5 +137,6 @@ function App() {
     </div>
   )
 }
+
 
 export default App
